@@ -1,0 +1,25 @@
+/* After Hours: warm ember light on a dark editorial stage. */
+[data-funnel="starter-webinar"] {
+  --f-bg: #0f0c0a;
+  --f-bg-alt: #16110e;
+  --f-surface: #1d1713;
+  --f-ink: #f5eee6;
+  --f-muted: #b9aa9b;
+  --f-line: rgb(245 238 230 / 0.11);
+  --f-accent: #f3a861;
+  --f-accent-ink: #1e1006;
+  --f-glow: #e9733a;
+  --f-radius: 16px;
+  --f-font-display: var(--font-starter-display), Georgia, serif;
+  --f-font-text: var(--font-starter-text), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Overscroll / body colour matches the funnel. */
+html:has([data-funnel="starter-webinar"]) body {
+  background: #0f0c0a;
+}
+
+[data-funnel="starter-webinar"] .font-display {
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 30;
+}

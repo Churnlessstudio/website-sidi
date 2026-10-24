@@ -1,0 +1,285 @@
+@import "tailwindcss";
+
+/*
+ * INC funnel design tokens.
+ * Every funnel defines these variables in its own src/funnels/<slug>/theme.css,
+ * scoped to [data-funnel="<slug>"]. The defaults below only exist so that
+ * internal pages (the funnel index) render sensibly.
+ */
+:root {
+  --f-bg: #0d0d0f;
+  --f-bg-alt: #141417;
+  --f-surface: #1a1a1f;
+  --f-ink: #f2f0ec;
+  --f-muted: #a8a59f;
+  --f-line: rgb(242 240 236 / 0.12);
+  --f-accent: #e8c27a;
+  --f-accent-ink: #1a1307;
+  --f-glow: #e8c27a;
+  --f-radius: 14px;
+  --f-font-display: ui-serif, Georgia, serif;
+  --f-font-text: ui-sans-serif, system-ui, sans-serif;
+  --f-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --f-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-f-bg: var(--f-bg);
+  --color-f-bg-alt: var(--f-bg-alt);
+  --color-f-surface: var(--f-surface);
+  --color-f-ink: var(--f-ink);
+  --color-f-muted: var(--f-muted);
+  --color-f-line: var(--f-line);
+  --color-f-accent: var(--f-accent);
+  --color-f-accent-ink: var(--f-accent-ink);
+  --color-f-glow: var(--f-glow);
+  --font-display: var(--f-font-display);
+  --font-text: var(--f-font-text);
+  --font-mono: var(--f-font-mono);
+  --radius-f: var(--f-radius);
+  --ease-out-expo: var(--f-ease-out);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--f-bg);
+    color: var(--f-ink);
+    font-family: var(--f-font-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--f-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--f-accent) 35%, transparent);
+  }
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+/* ---------- Fluid type scale (use these over fixed text-* sizes) ---------- */
+@utility text-display-xl {
+  font-size: clamp(2.6rem, 1.4rem + 5.4vw, 6.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+@utility text-display-lg {
+  font-size: clamp(2.2rem, 1.3rem + 3.8vw, 4.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+@utility text-display-md {
+  font-size: clamp(1.85rem, 1.25rem + 2.4vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+@utility text-display-sm {
+  font-size: clamp(1.35rem, 1.1rem + 1vw, 1.9rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+@utility text-lede {
+  font-size: clamp(1.06rem, 0.98rem + 0.4vw, 1.3rem);
+  line-height: 1.6;
+}
+@utility text-eyebrow {
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+@utility section-y {
+  padding-block: clamp(4.5rem, 3rem + 7vw, 10rem);
+}
+
+/* ---------- Buttons ---------- */
+.f-btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  min-height: 3.25rem;
+  padding: 0.95rem 1.75rem;
+  border-radius: 999px;
+  font-family: var(--f-font-text);
+  font-weight: 650;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  text-decoration: none;
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--f-ease-out),
+    box-shadow 0.35s var(--f-ease-out),
+    background-color 0.35s var(--f-ease-out),
+    color 0.35s var(--f-ease-out);
+}
+.f-btn-lg {
+  min-height: 3.75rem;
+  padding: 1.15rem 2.25rem;
+  font-size: 1.075rem;
+}
+.f-btn-primary {
+  background: var(--f-accent);
+  color: var(--f-accent-ink);
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 0.35) inset,
+    0 10px 30px -10px color-mix(in oklab, var(--f-glow) 70%, transparent);
+}
+.f-btn-primary::after {
+  /* light sweep on hover */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.8s var(--f-ease-out);
+}
+.f-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 0 rgb(255 255 255 / 0.35) inset,
+    0 18px 44px -12px color-mix(in oklab, var(--f-glow) 85%, transparent);
+}
+.f-btn-primary:hover::after {
+  transform: translateX(120%);
+}
+.f-btn-ghost {
+  color: var(--f-ink);
+  background: color-mix(in oklab, var(--f-ink) 6%, transparent);
+  box-shadow: 0 0 0 1px var(--f-line) inset;
+}
+.f-btn-ghost:hover {
+  background: color-mix(in oklab, var(--f-ink) 11%, transparent);
+  transform: translateY(-1px);
+}
+.f-btn:active {
+  transform: translateY(0) scale(0.985);
+}
+.f-btn .f-btn-arrow {
+  transition: transform 0.35s var(--f-ease-out);
+}
+.f-btn:hover .f-btn-arrow {
+  transform: translateX(3px);
+}
+
+/* ---------- Scroll reveal (see components/funnel/Reveal.tsx) ---------- */
+@media (scripting: enabled) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-y, 20px), 0);
+    transition:
+      opacity 0.8s var(--f-ease-out),
+      transform 0.9s var(--f-ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  [data-reveal][data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Above-the-fold entrance (CSS only, so the hero never waits on JS) */
+@keyframes f-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+}
+.f-enter {
+  animation: f-enter 0.9s var(--f-ease-out) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@keyframes f-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(var(--drift-x, 3%), var(--drift-y, -2%), 0) scale(1.06);
+  }
+}
+@keyframes f-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+.f-float {
+  animation: f-float 9s ease-in-out infinite;
+}
+
+/* ---------- FAQ accordion (native <details>, enhanced) ---------- */
+.f-faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+.f-faq summary::-webkit-details-marker {
+  display: none;
+}
+.f-faq .f-faq-icon {
+  transition: transform 0.4s var(--f-ease-out);
+}
+.f-faq[open] .f-faq-icon {
+  transform: rotate(45deg);
+}
+@supports selector(::details-content) {
+  .f-faq {
+    interpolate-size: allow-keywords;
+  }
+  .f-faq::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition:
+      block-size 0.45s var(--f-ease-out),
+      content-visibility 0.45s allow-discrete;
+  }
+  .f-faq[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* ---------- Motion safety ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
